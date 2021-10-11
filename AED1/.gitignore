@@ -1,0 +1,9 @@
+*
+!*/
+!*.*
+*.o
+*.depend
+bin/
+obj/
+*.layout
+.vscode/
