@@ -1,0 +1,31 @@
+@import "../../../sass/variables";
+
+.report {
+    padding: 5vh 10vh;
+    text-align: center;
+
+    h1 {
+        padding-bottom: 1.5vh;
+        margin: 0 15% 1vh;
+        color: $gray;
+        border-bottom: 2px solid $gray;
+    }
+
+    .periodFilter {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 5vh 15vh;
+    }
+
+    .indicatorList {
+        display: grid;
+        grid-template-rows: auto auto auto;
+        grid-template-columns: auto auto auto;
+        justify-content: space-evenly;
+    }
+
+    #generateReport {
+        margin-top: 5vh;
+    }
+}

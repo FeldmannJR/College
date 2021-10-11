@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -it -u www-data -w /sites/he he-php composer $@

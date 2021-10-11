@@ -1,0 +1,153 @@
+@import "../../../sass/variables";
+
+.settings {
+    padding: 5vh 10vw;
+
+    .header {
+        text-align: center;
+        padding-bottom: 1.5vh;
+        margin: 0 15% 5vh;
+        color: $gray;
+        border-bottom: 2px solid $gray;
+    }
+
+    .slides {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10vh;
+        @include panel(.5);
+
+        .panel {
+            border: .1vh solid rgba($gray, 0.25);
+            overflow: hidden;
+
+            &.hide {
+                opacity: 0
+            }
+        }
+
+        .slidesList {
+            @include panel(.09);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .slidePreview {
+                display: flex;
+
+                .slideOptions {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+
+                    i {
+                        cursor: pointer;
+
+                        &:hover {
+                            color: black;
+                        }
+                    }
+                }
+            }
+
+            .v-data-iterator {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+
+                .layout {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            .panel {
+                width: min-content;
+                margin: .5vh 2vh;
+                opacity: .75;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &[selected] {
+                    opacity: 1;
+                    box-shadow: 0 0 0.2vh 0.2vh $he-blue;
+                }
+
+            }
+
+            .btnAdd {
+                background-color: $he-green;
+                color: white;
+            }
+
+            &.hide {
+                opacity: 0
+            }
+        }
+
+        .slideSettings {
+            margin: .5vh 2vh;
+            width: 12vw;
+            display: flex;
+            flex-direction: column;
+
+            .btnSave {
+                align-self: center;
+                background-color: $he-blue;
+                color: white;
+
+                i {
+                    margin-right: .5vh;
+                }
+            }
+
+            ::placeholder {
+                color: black;
+            }
+        }
+    }
+
+    .indicatorsList {
+        width: 80vw;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-gap: 1vh;
+
+        .indicator {
+            width: 40vw;
+            padding: 2vh;
+            display: flex;
+
+            .preview {
+                $scale: .175;
+                width: $scale * 85vw;
+                height: $scale * 100vh;
+                box-shadow: 0 0 0.4vh rgba($gray, 0.5);
+                margin-right: 2vh;
+                @include indicators($scale);
+            }
+
+            .indicatorSettings {
+                flex-grow: 1;
+            }
+
+            .save {
+                align-self: flex-start;
+                cursor: pointer;
+
+                &:hover {
+                    i {
+                        color: black;
+                    }
+                }
+
+                &[disabled] {
+                    cursor: default;
+                }
+            }
+        }
+    }
+}

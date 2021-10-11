@@ -1,0 +1,18 @@
+@import "../../sass/variables";
+
+.heNavbar {
+    background-color: $he-blue !important;
+    color: white;
+    margin-bottom: 5vh;
+
+    .home {
+        display: flex;
+        align-items: center;
+
+        .logo {
+            filter: brightness(135%) drop-shadow(.1vh .1vh .2vh rgba(0, 0, 0, 0.5));
+            height: 3.6vh;
+            margin-right: 1.2vh;
+        }
+    }
+}

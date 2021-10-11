@@ -1,0 +1,64 @@
+version: '3'
+services:
+  nginx:
+    build:
+        context: ./nginx
+    container_name: he-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "6001:6001"
+      - "443:443"
+    volumes:
+      - ./nginx/configs/:/nginx/configs/
+      - ./app:/sites/he/
+    depends_on:
+      - "php"
+    networks:
+      - HE-network
+  php:
+    build:
+      context: ./php
+    container_name: he-php
+    volumes:
+      - ./app:/sites/he/
+    networks:
+      - HE-network
+
+  #Postgres
+  postgres:
+    image: postgres:11
+    container_name: he-datamart
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "54320:5432"
+    volumes:
+      - he-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "EsuezebiQuoh8"
+      POSTGRES_DB: "he_datamart"
+    networks:
+      - HE-network
+  # Pgadmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: he-pgadmin
+    ports:
+      - "8081:8081"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "foo@bar.com"
+      PGADMIN_DEFAULT_PASSWORD: "IopoonuN2ooli"
+      PGADMIN_LISTEN_PORT: "8081"
+    volumes:
+    - he-db-data:/root/.pgadmin
+    networks:
+      - HE-network
+  
+#Docker Networks
+networks:
+  HE-network:
+    driver: bridge
+volumes:
+  he-db-data:

@@ -1,0 +1,256 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito',
+sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$gray: #636b6f;
+
+$he-blue: #344669;
+$he-green: #3C8376;
+
+@mixin indicators($scale:1) {
+
+    .indicatorPanel {
+        width: 100%;
+        height: 100%;
+        padding: 0 !important;
+        font-family: 'Roboto', sans-serif;
+
+        .indicatorNumeric,
+        .indicatorMultiple,
+        .indicatorStatistic {
+            background-image: linear-gradient(white, rgb(245, 245, 245));
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+
+            h1,
+            h2,
+            h4 {
+                margin: 0;
+            }
+
+            h1 {
+                font-size: $scale * 40vh;
+            }
+
+            h2 {
+                font-size: $scale * 8vh;
+            }
+
+            h3 {
+                font-size: $scale * 3.5vh;
+            }
+        }
+
+        .indicatorNumeric,
+        .indicatorMultiple {
+            display: flex;
+            flex-direction: column;
+
+            transition: 1.5s;
+
+            h1,
+            .text,
+            .unitValue {
+                color: $he-blue;
+            }
+
+            h2,
+            .unitName {
+                color: $he-green;
+            }
+        }
+
+        .indicatorMultiple {
+            justify-content: center;
+            padding: 0 5%;
+            $text: $scale * 10vh;
+            $unitValue: $scale * 10vh;
+            $unitName: $scale * 4vh;
+            $padding-h: $scale * 6vh;
+            $margin-t: $scale * 5vh;
+
+            .text {
+                font-size: $text;
+            }
+
+            .units {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                justify-content: space-around;
+                align-items: center;
+
+                .unit {
+                    width: 12.5%;
+                    text-align: center;
+                    margin-top: $margin-t;
+                    padding: 0 $padding-h;
+
+                    .unitValue {
+                        font-size: $unitValue;
+                    }
+
+                    .unitName {
+                        font-size: $unitName;
+                    }
+                }
+            }
+
+            &[multiple] {
+                .text {
+                    font-size: 0.5 * $text;
+                }
+
+                .units {
+                    .unit {
+                        margin-top: 0.5 * $margin-t;
+                        padding: 0 (0.5 * $padding-h);
+
+                        .unitValue {
+                            font-size: 0.5 * $unitValue;
+                        }
+
+                        .unitName {
+                            font-size: 0.5 * $unitName;
+                        }
+                    }
+                }
+            }
+        }
+
+        .indicatorStatistic {
+            flex-direction: column;
+            justify-content: space-evenly;
+
+            .chart {
+                width: 70%;
+                height: 70%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .legend {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-evenly;
+
+                    .label {
+                        display: flex;
+                        align-items: center;
+                        padding: 0 ($scale * 1vh);
+
+                        [label] {
+                            width: $scale * 5vh;
+                            height: $scale * 5vh;
+                            border-radius: 100%;
+                            margin-right: $scale * 1vh;
+                        }
+                    }
+                }
+            }
+
+
+            &[stretched="true"] {
+                flex-direction: row-reverse;
+                justify-content: center;
+
+                .chart {
+                    flex-direction: row-reverse;
+                    align-items: center;
+                    width: 45%;
+                }
+
+                .legend {
+                    height: 100%;
+                    width: min-content;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}
+
+@mixin panel($scale:1) {
+    $fixed-width: 15vw;
+
+    .panel {
+        display: flex;
+
+        .fixed {
+            width: $scale * $fixed-width;
+            height: $scale * 100vh;
+            background-image: linear-gradient($he-blue, $he-green);
+
+            .indicatorFixed {
+                box-sizing: border-box;
+                height: $scale * 22.6vh;
+                margin: $scale * 1vw;
+                width: $scale * ($fixed-width - 2vw);
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+
+                h1 {
+                    margin: 0;
+                    color: white;
+                    font-size: $scale * 10vh;
+                }
+
+                h2 {
+                    margin: 0;
+                    color: white;
+                    font-size: $scale * 2.5vh;
+                }
+            }
+        }
+
+        .slider {
+            background-color: white;
+            margin: ($scale * .5vh) ($scale * .5vw);
+            display: grid;
+            grid-gap: $scale * 0.5vh;
+            height: $scale * 99vh;
+            width: $scale * (99 - $fixed-width);
+            object-fit: cover;
+
+            .row {
+                display: grid;
+                grid-gap: $scale * 0.5vh;
+                grid-auto-flow: column;
+
+                .frame {
+                    min-height: $scale * 49vh;
+                    min-width: $scale * (49 - $fixed-width/2);
+                    box-shadow: 0 ($scale * .5vh) ($scale * 1vh) rgba(0, 0, 0, 0.75);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: ($scale * .1vh) solid rgba(0, 0, 0, 0.25);
+
+                    @include indicators($scale);
+                }
+            }
+        }
+    }
+}

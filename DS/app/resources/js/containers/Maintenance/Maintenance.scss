@@ -1,0 +1,36 @@
+@import "../../../sass/variables";
+
+.maintenance {
+    padding: 5vh 10vh;
+
+    #addUser {
+        color: $gray;
+        outline: none;
+
+        i {
+            color: $he-green;
+        }
+
+        &:before {
+            color: transparent;
+        }
+
+        &:hover {
+            color: black;
+        }
+    }
+
+    tr {
+        &:hover {
+            background-color: white !important;
+        }
+    }
+
+    i {
+        transition: .25s;
+
+        &:hover {
+            color: black;
+        }
+    }
+}
