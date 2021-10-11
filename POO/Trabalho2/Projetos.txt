@@ -1,0 +1,4 @@
+860;Desenvolvimento de Tecnologias de Robótica Móvel para Veículos Elétricos Autônomos e Robôs de Serviço;Extensão
+1001;Fábrica de Ideias;Extensão
+666;Hut 8 - Empresa Junior da Computação;Ensino
+3027;Desenvolvimento de algoritmos para geração automática de células lógicas digitais;Pesquisa
