@@ -1,0 +1,81 @@
+public static void debugRotation() {
+
+		Button.ENTER.addButtonListener(new ButtonListener() {
+			
+			@Override
+			public void buttonReleased(Button b) {
+				motorDireita.rotate(rotation,true);
+				motorEsquerda.rotate(-rotation,false);
+				rotation = 0;
+				LCD.clear();
+			}
+			
+			@Override
+			public void buttonPressed(Button b) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		Button.LEFT.addButtonListener(new ButtonListener() {
+			
+			@Override
+			public void buttonReleased(Button b) {
+				rotation-=20;
+				rotation = Math.max(rotation, 0);
+				LCD.drawString("ROT:"+rotation, 0, 7);
+			}
+			
+			@Override
+			public void buttonPressed(Button b) {
+				
+			}
+		});
+		Button.RIGHT.addButtonListener(new ButtonListener() {
+			
+			@Override
+			public void buttonReleased(Button b) {
+				rotation+=20;
+				rotation = Math.max(rotation, 0);
+				LCD.drawString("ROT:"+rotation, 0, 7);
+				
+			}
+			
+			@Override
+			public void buttonPressed(Button b) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		Button.ESCAPE.waitForPressAndRelease();
+	}
+	public static void alwaysExit() {
+		Button.ESCAPE.addButtonListener(new ButtonListener() {
+			
+			@Override
+			public void buttonReleased(Button b) {
+				System.exit(0);				
+			}
+			
+			@Override
+			public void buttonPressed(Button b) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	public static void debug() {
+		int girou = 0;
+		int valor =0;
+		while(true) {
+			motorDireita.rotate(10,true);
+			motorEsquerda.rotate(-10,false);
+			girou+=20;
+			LCD.drawInt(girou,0,5);
+			int b=Button.waitForAnyPress();
+			if(b==Button.ID_ENTER) {
+				continue;	
+			}else {
+				break;
+			}
+			
+		}
