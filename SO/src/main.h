@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include <glib.h>
 #include <semaphore.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <sys/time.h>
 
 typedef struct _chair_t chair_t;
 typedef struct _client_t client_t;
@@ -66,4 +69,18 @@ void start_manager_service(state_t *state);
 void start_chair_thread(chair_t *chair);
 manager_t *create_manager(state_t *state);
 chair_t *create_chair(unsigned int index, state_t *state);
+
+
+
+
+char * timestamp();
+
+#define LOG(f_, ...) printf("%s ", timestamp()), printf((f_), ##__VA_ARGS__), printf("\n")
+
+char * timestamp(){
+    time_t now = time(NULL); 
+    char * time = asctime(gmtime(&now));
+    time[strlen(time)-1] = '\0';    // Remove \n
+    return time;
+}
 #endif

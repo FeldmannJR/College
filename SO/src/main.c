@@ -17,24 +17,29 @@ pthread_mutex_t *create_lock()
 
 int main()
 {
-    g_info("Eae pessoal");
     state_t *state = create_state();
     start_manager_service(state);
 
-    client_arrives(state, "Kleber", 2);
-    client_arrives(state, "Carlos", 3);
-    client_arrives(state, "João", 2);
-    client_arrives(state, "Ednaldo", 2);
-    client_arrives(state, "Leonardo", 4);
-    client_arrives(state, "Valdir", 5);
-    client_arrives(state, "Osmar", 5);
+    client_arrives(state, "Kleber", 12);
+    client_arrives(state, "Carlos", 6);
+    client_arrives(state, "João", 3);
+    client_arrives(state, "Ednaldo", 6);
+    client_arrives(state, "Leonardo", 8);
+    client_arrives(state, "Valdir", 10);
+    client_arrives(state, "Osmar", 2);
     client_arrives(state, "Ligma", 5);
-    sleep(3);
+    sleep(2);
     client_arrives(state, "Eduarda", 5);
-    sleep(1);
+    sleep(20);
     client_arrives(state, "Leticia", 5);
-    sleep(30);
-    client_arrives(state, "Gerson", 20);
+    sleep(5);
+    client_arrives(state, "Gerson", 1);
+    sleep(2);
+    client_arrives(state, "Simone", 15);
+    sleep(20);
+    client_arrives(state, "Lucas", 23);
+    sleep(32);
+    client_arrives(state, "Cuca", 42);
     state->manager->stop_working_flag = 1;
     pthread_join(state->manager->thread, NULL);
 }
@@ -47,7 +52,7 @@ state_t *create_state()
     manager_t *manager = create_manager(&state);
     state->manager = manager;
 
-    printf("There is a total of %i chairs!\n", CHAIR_AMOUNT);
+    LOG("There is a total of %i chairs!", CHAIR_AMOUNT);
     for (int i = 0; i < CHAIR_AMOUNT; i++)
     {
         chair_t *chair = create_chair(i, &state);
@@ -104,7 +109,7 @@ void client_arrives(state_t *state, char *name, int expected_work_in_seconds)
         }
         pthread_mutex_unlock(chair);
     }
-    printf("😡 %s não achou cadeira vazia e foi embora!\n", name);
+    LOG("😡 %s não achou cadeira vazia e foi embora!", name);
 }
 
 int sit(state_t *state, client_t *client, chair_t *chair)
@@ -122,7 +127,7 @@ int sit(state_t *state, client_t *client, chair_t *chair)
     g_queue_push_tail(state->queue, chair);
     pthread_mutex_unlock(state->lock);
 
-    printf("🪑 %s chegou e sentou na cadeira %i!\n", client->name, chair->index);
+    LOG("🪑 %s chegou e sentou na cadeira %i!", client->name, chair->index);
 
     // Notifies manager that a new client arrived
     sem_post(state->manager->client_notification);
@@ -131,11 +136,6 @@ int sit(state_t *state, client_t *client, chair_t *chair)
 }
 void start_chair_thread(chair_t *chair)
 {
-    if (chair->thread != NULL)
-    {
-        pthread_cancel(chair->thread);
-        return;
-    }
     pthread_create(&chair->thread, NULL, chair_handler, chair);
 }
 
@@ -143,8 +143,9 @@ void chair_handler(chair_t *chair)
 {
     sem_wait(chair->manager_call);
     pthread_mutex_lock(chair->lock);
-    printf("✨ Cadeira %i agora está livre!\n", chair->index);
+    LOG("✨ Cadeira %i agora está livre!", chair->index);
     chair->client = NULL;
+    chair->thread = NULL;
     pthread_mutex_unlock(chair->lock);
 }
 
@@ -174,9 +175,9 @@ void manager_handler(state_t *state)
                 // Notifies chair to come to manager table
                 sem_post(chair->manager_call);
 
-                printf("👋 Gerente atendendo o client %s !\n", manager->client->name);
+                LOG("👋 Gerente atendendo o client %s !", manager->client->name);
                 sleep(manager->client->work_time);
-                printf("🚶Finalizado atendimento do cliente %s!\n", manager->client->name);
+                LOG("🚶Finalizado atendimento do cliente %s!", manager->client->name);
                 free(manager->client);
                 manager->client = NULL;
 
@@ -185,7 +186,7 @@ void manager_handler(state_t *state)
                 pthread_mutex_unlock(state->lock);
                 if (remaining == 0 && manager->stop_working_flag == 1)
                 {
-                    printf("🍺 Não tem mais nenhum cliente para atender e acabou o turno do gerente!\n");
+                    LOG("🍺 Não tem mais nenhum cliente para atender e acabou o turno do gerente!");
                     break;
                 }
             }
